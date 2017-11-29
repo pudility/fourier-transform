@@ -1,12 +1,12 @@
 //
-//  main.m
-//  base
+//  ViewController.m
+//  fourier-transform
 //
-//  Created by Zoe IAMZOE.io on 11/28/17.
+//  Created by Zoe IAMZOE.io on 11/29/17.
 //  Copyright © 2017 Zoe IAMZOE.io. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "ViewController.h"
 
 @interface NSString (ConvertStringToArray)
 -(NSArray*)convertStringToArray;
@@ -58,9 +58,11 @@
 }
 @end
 
-int main(int argc, const char * argv[]) {
-    NSLog(@"started");
-    NSString* value = @"1000000000";
+@implementation ViewController
+- (IBAction)goPressed:(NSButton *)sender {
+    NSString* value = _textField.stringValue;
+    NSString* four = _fourTextField.stringValue;
+    NSLog(@"started %@", value);
     NSString* check_val = @"0";
     NSString* currentBaseResult;
     
@@ -75,7 +77,7 @@ int main(int argc, const char * argv[]) {
     while (x < [value intValue] && x < 63){
         currentBaseResult = [reduce inputArray:splitValue base:x];
         
-        if (([[check_val componentsSeparatedByString:@"4"] count] -1) < ([[currentBaseResult componentsSeparatedByString:@"4"] count] -1)) {
+        if (([[check_val componentsSeparatedByString:four] count] -1) < ([[currentBaseResult componentsSeparatedByString:four] count] -1)) {
             check_val = currentBaseResult;
             check_base = x;
             //NSLog(@"now set to %@", check_val);
@@ -85,10 +87,27 @@ int main(int argc, const char * argv[]) {
     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"executionTime = %f", executionTime);
+    _timeLabel.doubleValue = executionTime;
     
     NSLog(@"Finished");
     NSLog(@"Base: %d", check_base);
+    _baseLabel.integerValue = check_base;
     NSLog(@"Valu: %@", check_val);
-    
-    return 0;
+    _numberLabel.stringValue = check_val;
 }
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // Do any additional setup after loading the view.
+}
+
+
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+
+    // Update the view, if already loaded.
+}
+
+
+@end
